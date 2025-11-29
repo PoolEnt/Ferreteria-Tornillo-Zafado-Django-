@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'Estilos/estilos.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <span class="navbar-brand"> <i class="bi bi-screwdriver"></i> Tronillo Zafado</span>
+            <div>
+                <a href="{% url 'index' %}" class="btn btn-light me-2"><i class="bi bi-house"></i> Inicio</a>
+                <a href="{% url 'logout' %}" class="btn btn-light"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <div class="card-custom fade-in">
+                        <div class="card-header-custom" style="background: #FFB75E; color: white;">
+                            <h4 class="mb-0"><i class="bi bi-trash"></i> Eliminar Producto</h4>
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="alert alert-custom-warning">
+                                <strong><i class="bi bi-exclamation-triangle-fill"></i> ADVERTENCIA:</strong> Esta accion no se puede deshacer. El producto sera eliminado permanentemente del sistema.
+                            </div>
+                            
+                            <h5 class="mb-4" style="color: #d7d2cc;">¿Está seguro que desea eliminar este producto?</h5>
+                            
+                            <div class="p-4 mb-4" style="background: #f8f9fa; border-radius: 15px; border-left: 5px solid #eb3349;">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <p class="mb-2"><strong style="color: #666;">ID:</strong></p>
+                                        <p style="font-size: 1.1rem; color: #333;"><strong>{{ producto.id }}</strong></p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <p class="mb-2"><strong style="color: #666;">Nombre:</strong></p>
+                                        <p style="font-size: 1.1rem; color: #333;"><strong>{{ producto.nombre }}</strong></p>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <p class="mb-2"><strong style="color: #666;">Descripción:</strong></p>
+                                        <p style="color: #333;">{{ producto.descripcion }}</p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <p class="mb-2"><strong style="color: #666;">Stock:</strong></p>
+                                        <span class="badge bg-info" style="font-size: 1rem;">{{ producto.stock }} unidades</span>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <p class="mb-2"><strong style="color: #666;">Precio:</strong></p>
+                                        <p style="font-size: 1.1rem; color: #11998e;"><strong>${{ producto.precio_unitario }}</strong></p>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <p class="mb-2"><strong style="color: #666;">Categoría:</strong></p>
+                                        <span class="badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); font-size: 0.9rem;">
+                                            {{ producto.get_categoria_display }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-custom-danger" style="padding: 15px; font-size: 1.1rem;">
+                                        Sí, Eliminar Definitivamente
+                                    </button>
+                                    <a href="{% url 'listar_producto' %}" class="btn btn-secondary" style="padding: 15px; font-size: 1.1rem;">
+                                        ← Cancelar y Volver
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid" style="background: #F2994A; background: -webkit-linear-gradient(to right, #F2C94C, #F2994A); background: linear-gradient(to right, #F2C94C, #F2994A); color: #605C3C;">
+        <div class="text-center p-1">  
+                 © 2025 Copyright:
+            <p>Agustin Fuentealba 💻</p>
+        </div>
+    </footer>
+</body>
+</html>

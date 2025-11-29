@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'Estilos/estilos.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <span class="navbar-brand"><i class="bi bi-screwdriver"></i> Tornillo Zafado</span>
+            <div>
+                <a href="{% url 'index' %}" class="btn btn-light me-2"> <i class="bi bi-house"></i> Inicio</a>
+                <a href="{% url 'logout' %}" class="btn btn-light"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card-custom fade-in">
+                        <div class="card-header-custom" style="background: #FFB75E; color: #605C3C;">
+                            <h4 class="mb-0"> <i class="bi bi-plus-circle"></i> Agregar Nuevo Producto</h4>
+                        </div>
+                        <div class="card-body-custom">
+                            <form method="POST">
+                                {% csrf_token %}
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">{{ form.nombre.label }}</label>
+                                    {{ form.nombre }}
+                                    {% if form.nombre.errors %}
+                                        <div class="text-danger mt-1">
+                                            <small>{{ form.nombre.errors }}</small>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label class="form-label">{{ form.descripcion.label }}</label>
+                                    {{ form.descripcion }}
+                                    {% if form.descripcion.errors %}
+                                        <div class="text-danger mt-1">
+                                            <small>{{ form.descripcion.errors }}</small>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">{{ form.stock.label }}</label>
+                                        {{ form.stock }}
+                                        {% if form.stock.errors %}
+                                            <div class="text-danger mt-1">
+                                                <small>{{ form.stock.errors }}</small>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">{{ form.precio_unitario.label }}</label>
+                                        {{ form.precio_unitario }}
+                                        {% if form.precio_unitario.errors %}
+                                            <div class="text-danger mt-1">
+                                                <small>{{ form.precio_unitario.errors }}</small>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">{{ form.fecha_ingreso.label }}</label>
+                                        {{ form.fecha_ingreso }}
+                                        {% if form.fecha_ingreso.errors %}
+                                            <div class="text-danger mt-1">
+                                                <small>{{ form.fecha_ingreso.errors }}</small>
+                                            </div>
+                                        {% endif %}
+                                        <small class="form-text text-muted">Formato: dd/mm/yyyy (Ejemplo: 31/12/2024)</small>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label">{{ form.categoria.label }}</label>
+                                        {{ form.categoria }}
+                                        {% if form.categoria.errors %}
+                                            <div class="text-danger mt-1">
+                                                <small>{{ form.categoria.errors }}</small>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid gap-2 mt-4">
+                                    <button type="submit" class="btn btn-custom-success" style="padding: 15px; font-size: 1.1rem;">
+                                        Guardar Producto
+                                    </button>
+                                    <a href="{% url 'listar_producto' %}" class="btn btn-secondary" style="padding: 15px;">
+                                        Cancelar
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid" style="background: #F2994A; background: -webkit-linear-gradient(to right, #F2C94C, #F2994A); background: linear-gradient(to right, #F2C94C, #F2994A); color: #605C3C;">
+        <div class="text-center p-1">  
+                 © 2025 Copyright:
+            <p>Agustin Fuentealba 💻</p>
+        </div>
+    </footer>
+</body>
+</html>

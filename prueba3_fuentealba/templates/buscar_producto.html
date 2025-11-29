@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'Estilos/estilos.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <span class="navbar-brand"><i class="bi bi-screwdriver"></i> Tornillo Zafado</span>
+            <div>
+                <a href="{% url 'index' %}" class="btn btn-light me-2"> <i class="bi bi-house"></i> Inicio</a>
+                <a href="{% url 'logout' %}" class="btn btn-light"><i class="bi bi-box-arrow-left"></i> Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="container">
+            <div class="content-wrapper fade-in">
+                <h2 class="mb-4" style="color: #605C3C"><i class="bi bi-search"></i> Buscar Producto</h2>
+                
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" 
+                                    class="form-control" 
+                                    name="busqueda" 
+                                    placeholder="Ingrese el nombre del producto a buscar..." 
+                                    value="{{ busqueda }}" 
+                                    required
+                                    style="padding: 15px; font-size: 1.1rem;">
+                                <button class="btn btn-custom-primary" type="submit" style="padding: 0 30px;">
+                                    Buscar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                {% if busqueda %}
+                <div class="alert alert-custom-info" style="background: #F2994A; background: -webkit-linear-gradient(to right, #F2C94C, #F2994A); background: linear-gradient(to right, #F2C94C, #F2994A); color: #605C3C;">
+                    <strong>Resultados de búsqueda para:</strong> "{{ busqueda }}"
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-custom table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Stock</th>
+                                <th>Precio</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Categoría</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos %}
+                            <tr>
+                                <td><strong>{{ producto.id }}</strong></td>
+                                <td><strong>{{ producto.nombre }}</strong></td>
+                                <td>{{ producto.descripcion }}</td>
+                                <td><span class="badge bg-info">{{ producto.stock }} unidades</span></td>
+                                <td><strong style="color: #11998e;">${{ producto.precio_unitario }}</strong></td>
+                                <td>{{ producto.fecha_ingreso|date:"d/m/Y" }}</td>
+                                <td>
+                                    <span class="badge" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                        {{ producto.get_categoria_display }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center" style="padding: 3rem;">
+                                    <div style="font-size: 3rem;"></div>
+                                    <h5 style="color: #666;">No se encontraron productos</h5>
+                                    <p style="color: #999;">Intenta con otro término de búsqueda</p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center" style="padding: 4rem; color: #999;">
+                    <div style="font-size: 5rem;"></div>
+                    <h4 style="color: #d7d2cc">Busca productos por nombre</h4>
+                    <p>Ingresa el nombre del producto en el campo de búsqueda</p>
+                </div>
+                {% endif %}
+                
+                <div class="mt-4">
+                    <a href="{% url 'index' %}" class="btn btn-secondary">← Volver al Inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="container-fluid" style="background: #F2994A; background: -webkit-linear-gradient(to right, #F2C94C, #F2994A); background: linear-gradient(to right, #F2C94C, #F2994A); color: #605C3C;">
+        <div class="text-center p-1">  
+                 © 2025 Copyright:
+            <p>Agustin Fuentealba 💻</p>
+        </div>
+    </footer>
+</body>
+</html>
